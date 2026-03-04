@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Mall AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body>
+    <header class="header">
+      <div class="container">
+        <div class="nav">
+          <div class="logo"><i class="fa-solid fa-brain highlight"></i> SMART MALL <span class="highlight">AI</span></div>
+          <nav class="nav-menu">
+            <a href="#features">Features</a>
+            <a href="#products">Products</a>
+            <a href="#contact">Contact</a>
+            <a href="#demo" class="btn-demo-nav">Try Demo</a>
+            <div style="display:flex; gap:15px; margin-left:10px;">
+                <a href="#"><i class="fa-solid fa-envelope"></i></a>
+                <a href="#"><i class="fa-solid fa-phone"></i></a>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <section id="hero" class="hero">
+      <div class="container">
+        <span class="badge">AI-Powered Technology</span>
+        <h1>SMART MALL <span class="highlight">AI</span></h1>
+        <p>Next-Gen AI Retail & Smart Billing System. Experience instant, error-free billing at checkout—no barcodes, no scanning, no waiting.</p>
+        <a href="#demo" class="btn-demo-nav" style="padding: 15px 40px; font-size: 18px;">Try Demo</a>
+      </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features">
+      <div class="container">
+        <div style="text-align:center; margin-bottom:50px;">
+            <span class="section-pill">Features</span>
+            <h2 class="section-title" style="margin-bottom:0;">Powerful <span class="highlight">AI-Driven</span> Features</h2>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card"><i class="fa-solid fa-bullseye feature-icon"></i><h3>AI Fruit Recognition</h3><p style="color:var(--text-dim); font-size:14px;">Advanced computer vision identifies fruits with 99% accuracy.</p></div>
+          <div class="feature-card"><i class="fa-solid fa-camera feature-icon"></i><h3>Raspberry Pi Camera</h3><p style="color:var(--text-dim); font-size:14px;">Seamless integration for real-time image capture.</p></div>
+          <div class="feature-card"><i class="fa-solid fa-scale-balanced feature-icon"></i><h3>Smart Weight Pricing</h3><p style="color:var(--text-dim); font-size:14px;">Automatic weight-based pricing calculation.</p></div>
+          <div class="feature-card"><i class="fa-solid fa-receipt feature-icon"></i><h3>Instant Invoice</h3><p style="color:var(--text-dim); font-size:14px;">Generate professional receipts in seconds.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section id="products" style="background:var(--bg-secondary);">
+      <div class="container">
+        <div style="text-align:center; margin-bottom:50px;">
+            <span class="section-pill">Product Catalog</span>
+            <h2 class="section-title" style="margin-bottom:0;">Available <span class="highlight">Fruits</span></h2>
+        </div>
+        <div class="products-grid">
+          <div class="product-card"><span class="product-emoji">🍎</span><h3>Apple</h3><p class="highlight">₹120/kg</p></div>
+          <div class="product-card"><span class="product-emoji">🍌</span><h3>Banana</h3><p class="highlight">₹40/kg</p></div>
+          <div class="product-card"><span class="product-emoji">🥭</span><h3>Mango</h3><p class="highlight">₹150/kg</p></div>
+          <div class="product-card"><span class="product-emoji">🍊</span><h3>Orange</h3><p class="highlight">₹60/kg</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BILLING TERMINAL -->
+    <section id="demo">
+      <div class="container">
+        <div style="text-align:center; margin-bottom:50px;">
+            <span class="section-pill">Smart Terminal</span>
+            <h2 class="section-title" style="margin-bottom:0;">Smart <span class="highlight">Billing</span> Terminal</h2>
+        </div>
+        <div class="billing-grid">
+          <div class="terminal-left">
+            <h3 style="margin-bottom:20px">Scan & Add Items</h3>
+            <div style="display:flex; gap:10px; margin-bottom:20px;">
+                <input type="file" id="phoneFile" style="display:none" onchange="uploadPhone()">
+                <button onclick="document.getElementById('phoneFile').click()" style="flex:1; padding:12px; border-radius:8px; background:#1e293b; color:white; border:1px solid #334155; cursor:pointer;"><i class="fa-solid fa-upload"></i> Upload</button>
+                <button onclick="scanPi()" style="flex:1; padding:12px; border-radius:8px; background:var(--accent); color:#000; font-weight:bold; border:none; cursor:pointer;"><i class="fa-solid fa-camera"></i> Pi Camera</button>
+            </div>
+            <div class="preview-area">
+              <img id="res-img" src="" style="display:none">
+              <p id="preview-text" style="color:var(--text-dim)">Image preview will appear here</p>
+            </div>
+            <div id="ai-info" style="display:none; margin-bottom:20px;">
+                <p id="selectedFruit" style="color:var(--accent); font-weight:bold; font-size:20px;"></p>
+            </div>
+            <label style="font-size:12px; color:var(--text-dim)">WEIGHT (KG)</label>
+            <input type="number" id="weight-kg" value="1.0" step="0.1" style="width:100%; padding:12px; background:#050a14; border:1px solid var(--border); color:white; border-radius:8px; margin:10px 0;">
+            <button onclick="addToInvoice()" style="width:100%; padding:15px; background:var(--accent); color:black; font-weight:bold; border-radius:8px; border:none; cursor:pointer;">+ Add to Invoice</button>
+          </div>
+
+          <div class="billing-right">
+            <div class="receipt">
+              <h3>OFFICIAL RECEIPT</h3>
+              <table class="receipt-table">
+                <thead><tr><th>ITEM</th><th>QTY</th><th>RATE</th><th>AMT</th></tr></thead>
+                <tbody id="cart-body"></tbody>
+              </table>
+              <div class="total-row">
+                <span>TOTAL</span>
+                <span>₹<span id="grand-total">0.00</span></span>
+              </div>
+              <button onclick="window.print()" style="width:100%; padding:15px; background:black; color:white; border-radius:8px; margin-top:20px; font-weight:bold; cursor:pointer;">Print Invoice</button>
+              <button onclick="location.reload()" style="width:100%; padding:10px; background:none; color:#666; border:none; cursor:pointer; font-size:12px;">New Customer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE US SECTION -->
+    <section id="why">
+      <div class="container why-layout">
+        <div class="why-left">
+          <span class="section-pill">Why Choose Us</span>
+          <h2 style="font-size:48px; font-weight:900; margin:20px 0;">Why <span class="highlight">Smart Mall AI</span>?</h2>
+          <p style="color:var(--text-dim); font-size:18px;">Transform your retail operations with cutting-edge AI technology. Our system delivers unmatched speed and accuracy.</p>
+          <div class="why-stats">
+            <div class="stat-item"><span class="stat-value">99%</span><span class="stat-label">Accuracy</span></div>
+            <div class="stat-item"><span class="stat-value">70%</span><span class="stat-label">Faster</span></div>
+            <div class="stat-item"><span class="stat-value" style="color:#a78bfa;">24/7</span><span class="stat-label">Operation</span></div>
+          </div>
+        </div>
+        <div class="why-right">
+          <div class="why-grid">
+            <div class="why-card"><i class="fa-solid fa-clock why-icon"></i><h3>Faster Checkout</h3><p style="font-size:12px; color:var(--text-dim)">Reduce time by 70% with AI</p></div>
+            <div class="why-card"><i class="fa-solid fa-shield why-icon"></i><h3>Zero Error</h3><p style="font-size:12px; color:var(--text-dim)">Automated detection system</p></div>
+            <div class="why-card"><i class="fa-solid fa-microchip why-icon"></i><h3>AI Powered</h3><p style="font-size:12px; color:var(--text-dim)">Machine learning intelligence</p></div>
+            <div class="why-card"><i class="fa-solid fa-arrow-up why-icon"></i><h3>Scalable</h3><p style="font-size:12px; color:var(--text-dim)">Effortless growth for stores</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="contact" class="footer">
+      <div class="container footer-content">
+        <div class="logo"><i class="fa-solid fa-brain highlight"></i> SMART MALL <span class="highlight">AI</span></div>
+        <div class="social-links">
+          <a href="#"><i class="fa-solid fa-envelope"></i></a>
+          <a href="#"><i class="fa-solid fa-message"></i></a>
+          <a href="#"><i class="fa-solid fa-link"></i></a>
+        </div>
+      </div>
+      <p style="text-align:center; margin-top:20px; font-size:12px; color:var(--text-dim);">All Rights Reserved © 2025 Smart Mall AI</p>
+    </footer>
+
+    <script>
+        let activeItem = {}; let total = 0;
+        async function uploadPhone() {
+            const fd = new FormData(); fd.append('file', document.getElementById('phoneFile').files[0]);
+            handle('/scan_phone', fd);
+        }
+        async function scanPi() { handle('/scan_pi', new FormData()); }
+        async function handle(url, fd) {
+            document.getElementById('preview-text').innerText = "AI ANALYZING...";
+            const res = await fetch(url, {method: 'POST', body: fd});
+            activeItem = await res.json();
+            if(activeItem.error) { alert(activeItem.error); return; }
+            
+            document.getElementById('selectedFruit').innerText = `${activeItem.label} × ₹${activeItem.unit_price}/kg`;
+            document.getElementById('res-img').src = activeItem.img + "?t=" + new Date().getTime();
+            document.getElementById('res-img').style.display = "block";
+            document.getElementById('preview-text').style.display = "none";
+            document.getElementById('ai-info').style.display = "block";
+        }
+        function addToInvoice() {
+            if(!activeItem.label) return;
+            const w = document.getElementById('weight-kg').value;
+            const sub = (activeItem.unit_price * w).toFixed(2);
+            const row = `<tr><td>${activeItem.label}</td><td>${w}</td><td>${activeItem.unit_price}</td><td>₹${sub}</td></tr>`;
+            document.getElementById('cart-body').innerHTML += row;
+            total += parseFloat(sub);
+            document.getElementById('grand-total').innerText = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>
